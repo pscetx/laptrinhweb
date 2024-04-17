@@ -22,23 +22,38 @@ def item():
     return render_template("item.html")
 
 
-@app.route("/store", methods=['POST'])
+@app.route("/store", methods=['GET', 'POST'])
 def store():
-    merch_data = get_merch()
-    my_search_text = request.form['searchInput']
-    products = load_data(my_search_text)
-    return render_template('store.html', merch=merch_data, search_text=my_search_text)
+    if request.method == 'POST':
+        search_text = request.form['searchInput']
+        products = load_data(search_text)
+        return render_template('store.html', merch=products, search_text=search_text)
+    else:
+        merch_data = get_merch()
+        return render_template('store.html', merch=merch_data)
 
 
 def load_data(search_text):
-    if search_text != "":
+    if search_text:
         conn = sqlite3.connect(dbname)
-        cursor = conn.cursor()
-        command = ("select * from Merchandise where name like '%" + search_text + "%' or price like '%" + search_text + "%'")
-        cursor.execute(command)
-        data = cursor.fetchall()
-        conn.close()
-        return data
+        cur = conn.cursor()
+        command = "SELECT * FROM Merchandise WHERE name LIKE ? OR price LIKE ?"
+        cur.execute(command, ('%' + search_text + '%', '%' + search_text + '%'))
+        merch = cur.fetchall()
+        merch_list = []
+        for merch_item in merch:
+            merch_dict = {
+                'id': merch_item[0],
+                'name': merch_item[1],
+                'image_main_url': merch_item[2],
+                'image_hover_url': merch_item[3],
+                'price': merch_item[4],
+                'created_time': merch_item[5]
+            }
+            merch_list.append(merch_dict)
+        return merch_list
+    else:
+        return []
 
 
 def get_merch():

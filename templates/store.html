@@ -59,6 +59,19 @@
         </div>
     </header>
 
+    <div class="search-bar">
+    <form method="POST">
+        <input type="text" name="searchInput" placeholder="Search...">
+        <button type="submit">Search</button>
+    </form>
+    </div>
+    <p>
+        {% if search_text %}
+            You searched for: {{ search_text }}
+            {{ table|safe }}
+        {% endif %}
+    </p>
+
     <div class="wrapper">
     <section class="storesection">
     {% for item in merch %}
