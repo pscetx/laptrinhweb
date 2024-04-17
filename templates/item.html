@@ -75,35 +75,20 @@
     <div class="wrapper">
         <section class="itemsection">
             <div class="product">
-                <img class="mySlides" src="{{ url_for('static', filename='images/DFMCOLLECTORS01FRONT_800x.webp') }}" style="width:55%;display:none">
-                <img class="mySlides" src="{{ url_for('static', filename='images/DFMCOLLECTORS01DISC_800x.webp') }}" style="width:55%">
-                <img class="mySlides" src="{{ url_for('static', filename='images/DFMCOLLECTORS01BACK_800x.webp') }}" style="width:55%;display:none">
+                {% for slide in item_slides %}
+                    <img class="mySlides" src="{{ url_for('static', filename=slide['image_url']) }}" style="width:55%;display:none">
+                {% endfor %}
                 <div class="row-padding">
-                    <img src="{{ url_for('static', filename='images/DFMCOLLECTORS01FRONT_800x.webp') }}" onclick="currentDiv(1)">
-                    <img src="{{ url_for('static', filename='images/DFMCOLLECTORS01DISC_800x.webp') }}" onclick="currentDiv(2)">
-                    <img src="{{ url_for('static', filename='images/DFMCOLLECTORS01BACK_800x.webp') }}" onclick="currentDiv(3)">
+                    {% for slide in item_slides %}
+                        <img src="{{ url_for('static', filename=slide['image_url']) }}" onclick="currentDiv({{ loop.index }})">
+                    {% endfor %}
                 </div>
             </div>
             <div class="desc">
-                <h1>DAWN FM COLLECTOR'S 01 CD<br>$12.00</h1>
-                <p class="tracklist">1. DAWN FM<br>
-                    2. GASOLINE<br>
-                    3. HOW DO I MAKE YOU LOVE ME?<br>
-                    4. TAKE MY BREATH<br>
-                    5. SACRIFICE<br>
-                    6. A TALE BY QUINCY<br>
-                    7. OUT OF TIME<br>
-                    8. HERE WE GO... AGAIN<br>
-                    9. BEST FRIENDS<br>
-                    10. IS THERE SOMEONE ELSE?<br>
-                    11. STARRY EYES<br>
-                    12. EVERY ANGEL IS TERRIFYING<br>
-                    13. DON'T BREAK MY HEART<br>
-                    14. I HEARD YOU'RE MARRIED<br>
-                    15. LESS THAN ZERO<br>
-                    16. PHANTOM REGRET BY JIM<br></p>
-                <p class="note">LIMITED TO 4 MUSIC PRODUCTS PER CUSTOMER.</p>
-                <p class="copyright">XO RECORDS™</p>
+                <h1>{{ item_details['name'] }}<br>${{ item_details['price'] }}</h1>
+                <p class="tracklist">{{ item_details['des']|safe }}</p>
+                <p class="note">{{ item_details['note'] }}</p>
+                <p class="copyright">{{ item_details['copyright'] }}</p>
             </div>
             <div class="add">
                 <a href="{{ url_for('acc') }}">ADD TO CART</a>

@@ -12,14 +12,47 @@ def index():
     return render_template("index.html", videos=video_data, music=music_data)
 
 
-@app.route("/acc")
-def acc():
-    return render_template("acc.html")
+def get_videos():
+    try:
+        conn = sqlite3.connect(dbname)
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM Videos ORDER BY created_time DESC LIMIT 6')
+        videos = cur.fetchall()
+        video_list = []
+        for video in videos:
+            video_dict = {
+                'id': video[0],
+                'title': video[1],
+                'image_url': video[2],
+                'created_time': video[3]
+            }
+            video_list.append(video_dict)
+        return video_list
+    except sqlite3.Error as e:
+        print("Error reading data from SQLite:", e)
+        return []
 
 
-@app.route("/item")
-def item():
-    return render_template("item.html")
+def get_music():
+    try:
+        conn = sqlite3.connect(dbname)
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM Music ORDER BY created_time DESC LIMIT 5')
+        music = cur.fetchall()
+        music_list = []
+        for music_item in music:
+            music_dict = {
+                'id': music_item[0],
+                'type': music_item[1],
+                'title': music_item[2],
+                'image_url': music_item[3],
+                'created_time': music_item[4]
+            }
+            music_list.append(music_dict)
+        return music_list
+    except sqlite3.Error as e:
+        print("Error reading data from SQLite:", e)
+        return []
 
 
 @app.route("/store", methods=['GET', 'POST'])
@@ -84,47 +117,65 @@ def get_merch():
         return []
 
 
-def get_videos():
+@app.route("/item/<int:item_id>")
+def item(item_id):
+    item_slides = get_item_slides(item_id)
+    item_details = get_item_details(item_id)
+    if item_details:
+        item_details['des'] = add_line_breaks(item_details['des'])
+        return render_template('item.html', item_slides=item_slides, item_details=item_details)
+
+
+def add_line_breaks(text):
+    return text.replace('\n', '<br>')
+
+
+def get_item_slides(item_id):
     try:
         conn = sqlite3.connect(dbname)
         cur = conn.cursor()
-        cur.execute('SELECT * FROM Videos ORDER BY created_time DESC LIMIT 6')
-        videos = cur.fetchall()
-        video_list = []
-        for video in videos:
-            video_dict = {
-                'id': video[0],
-                'title': video[1],
-                'image_url': video[2],
-                'created_time': video[3]
-            }
-            video_list.append(video_dict)
-        return video_list
+        cur.execute('SELECT image_url FROM ItemSlideImages m WHERE m.item_id = ?'
+                    'ORDER BY num ASC', (item_id,))
+        item_details = cur.fetchall()
+        if item_details:
+            slides = [{'item_id': item_id, 'image_url': row[0]} for row in item_details]
+            return slides
+        else:
+            return None
     except sqlite3.Error as e:
         print("Error reading data from SQLite:", e)
-        return []
+        return None
 
 
-def get_music():
+def get_item_details(item_id):
     try:
         conn = sqlite3.connect(dbname)
         cur = conn.cursor()
-        cur.execute('SELECT * FROM Music ORDER BY created_time DESC LIMIT 5')
-        music = cur.fetchall()
-        music_list = []
-        for music_item in music:
-            music_dict = {
-                'id': music_item[0],
-                'type': music_item[1],
-                'title': music_item[2],
-                'image_url': music_item[3],
-                'created_time': music_item[4]
+        cur.execute('''SELECT m.name, m.price, md.des, md.note, md.copyright 
+                       FROM Merchandise m 
+                       JOIN MerchDetails md ON m.id = md.item_id 
+                       WHERE m.id = ?''', (item_id,))
+        item_details = cur.fetchone()
+        if item_details:
+            item_dict = {
+                'item_id': item_id,
+                'name': item_details[0],
+                'price': item_details[1],
+                'des': item_details[2],
+                'note': item_details[3],
+                'copyright': item_details[4]
             }
-            music_list.append(music_dict)
-        return music_list
+            return item_dict
+        else:
+            return None
     except sqlite3.Error as e:
         print("Error reading data from SQLite:", e)
-        return []
+        return None
+
+
+@app.route("/acc")
+def acc():
+    return render_template("acc.html")
 
 
 if __name__ == '__main__':

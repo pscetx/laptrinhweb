@@ -77,15 +77,15 @@
     {% for item in merch %}
     <div class="merch">
         <div class="figure">
-            <a href="item.html"><img class="image-main" src="{{ url_for('static', filename=item['image_main_url']) }}" alt="">
+            <a href="{{ url_for('item', item_id=item['id']) }}"><img class="image-main" src="{{ url_for('static', filename=item['image_main_url']) }}" alt="">
                 <img class="image-hover" src="{{ url_for('static', filename=item['image_hover_url']) }}" alt=""></a>
         </div>
         <ul>
             <li>
-                <a href="#">{{ item['name'] }}</a>
+                <a href="{{ url_for('item', item_id=item['id']) }}">{{ item['name'] }}</a>
             </li>
             <li>
-                <a href="#">${{ item['price'] }}</a>
+                <a href="{{ url_for('item', item_id=item['id']) }}">${{ item['price'] }}</a>
             </li>
         </ul>
     </div>
