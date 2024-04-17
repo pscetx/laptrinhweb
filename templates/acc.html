@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE WEEKEND</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;700&family=Fjalla+One&display=swap"
+        rel="stylesheet">
+
+    <link rel="xo-icon" sizes="180x180" href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='images/icon.png') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header>
+        <div class="wrapper">
+            <nav class="nothome">
+                <div class="logo">
+                    <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/tw-sitelogo.png') }}" alt=""></a>
+                </div>
+                <ul class="nav-menu">
+                    <li>
+                        <a href="#" class="nav-link">NEWS</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">MUSIC</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">VIDEOS</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('store') }}" class="nav-link">STORE</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">XOFUND</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('acc') }}" class="nav-link">NEWSLETTER</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('acc') }}" class="nav-link">CART</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+            <!-- End of navigation menu -->
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <section class="accsection">
+            <div class="newsletter">
+                <h1>
+                    SUBSCRIBE TO EMAIL UPDATES FROM:<br>
+                    THE WEEKND<br>
+                    REPUBLIC RECORDS<br>
+                    UNIVERSAL MUSIC GROUP<br>
+                </h1>
+                <p>Emails will be sent by or on behalf of Universal Music Group 2220 Colorado Avenue, Santa Monica, CA
+                    90404 (310)
+                    865-4000. You may withdraw your consent at any time.</p>
+                <div class="form">
+                    <input class="in" type="email" id="enterN" placeholder=" EMAIL ADDRESS"><br>
+                    <button class="sub" id="submitBtn">SUBMIT</button><br>
+                </div>
+            </div>
+            <div class="create">
+                <h1>CREATE ACCOUNT</h1>
+                <div class="form">
+                    <input class="in" type="text" id="enterA" placeholder=" USER NAME"><br>
+                    <input class="in" type="text" id="enterFn" placeholder=" FIRST NAME"><br>
+                    <input class="in" type="text" id="enterLn" placeholder=" LAST NAME"><br>
+                    <input class="in" type="email" id="enterE" placeholder=" EMAIL ADDRESS"><br>
+                    <input class="in" type="password" id="enterP" placeholder=" PASSWORD"><br>
+                    <button class="sub" id="createBtn">CREATE</button><br>
+                </div>
+                <h1 style="margin: 15px;">OR</h1>
+                <h1><a href="#">SIGN IN</a></h1>
+            </div>
+        </section>
+    </div>
+    <!-- End of acc section -->
+
+    <div class="wrapper">
+        <section class="footersection">
+            <div class="follow">
+                <ul>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/facebook.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/instagram.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/twitter.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/youtube.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/soundcloud.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/apple.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/spotify.png') }}" width="22"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="link">
+                <ul>
+                    <li>
+                        <a href="#">COPYRIGHT REPLUBIC RECORD</a>
+                    </li>
+                    <li>
+                        <a href="#">TERMS & CONDITIONS</a>
+                    </li>
+                    <li>
+                        <a href="#">PRIVACY POLICY</a>
+                    </li>
+                    <li>
+                        <a href="#">DO NOT SELL MY PERSONAL INFOMATION</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <!-- End of footer section -->
+
+    <script type="module">
+        import { initializeApp } from "{{ url_for('static', filename='https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js') }}";
+        const firebaseConfig = {
+            apiKey: "AIzaSyBa_4I_BGkEV69uAJbmcQF79wXvx0x4BmM",
+            authDomain: "thietkeweb-c0999.firebaseapp.com",
+            databaseURL: "https://thietkeweb-c0999-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "thietkeweb-c0999",
+            storageBucket: "thietkeweb-c0999.appspot.com",
+            messagingSenderId: "857422848769",
+            appId: "1:857422848769:web:4bad03ae446fec04f57100"
+        };
+
+        const app = initializeApp(firebaseConfig);
+
+        import { getDatabase, set, push, get, child, ref }
+            from "{{ url_for('static', filename='https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js') }}"
+
+        const db = getDatabase();
+
+        var enterN = document.querySelector("#enterN");
+        var enterA = document.querySelector("#enterA");
+        var enterFn = document.querySelector("#enterFn");
+        var enterLn = document.querySelector("#enterLn");
+        var enterE = document.querySelector("#enterE");
+        var enterP = document.querySelector("#enterP");
+
+        var submitBtn = document.querySelector("#submitBtn");
+        var createBtn = document.querySelector("#createBtn");
+
+        function SubmitData() {
+            push(ref(db, "Newsletter/"), {
+                Email: enterN.value
+            })
+                .then(() => {
+                    alert("Email opted in suscessfully!");
+                })
+                .catch((error) => {
+                    alert(error)
+                });
+
+            const dbref = ref(db);
+        }
+
+        function InsertData() {
+            push(ref(db, "Accounts/" + enterA.value), {
+                Username: enterA.value,
+                FirstName: enterFn.value,
+                LastName: enterLn.value,
+                Email: enterE.value,
+                Password: enterP.value
+            })
+                .then(() => {
+                    const dbref = ref(db);
+                    get(child(dbref, "Accounts/" + enterA.value))
+                        .then((snapshot) => {
+                            if (snapshot.exists()) {
+                                var value = enterA.value;
+                                localStorage.setItem('myValue', value);
+                                window.location.href = "item.html";
+                            }
+                        })
+                        .catch((error) => {
+                            alert(error)
+                        })
+                    alert("Account created suscessfully!");
+                })
+                .catch((error) => {
+                    alert(error)
+                });
+        }
+
+        submitBtn.addEventListener('click', SubmitData);
+        createBtn.addEventListener('click', InsertData);
+    </script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+
+</html>

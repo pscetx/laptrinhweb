@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE WEEKEND</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;700&family=Fjalla+One&display=swap"
+        rel="stylesheet">
+
+    <link rel="xo-icon" sizes="180x180" href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='images/icon.png') }}">
+
+    <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header>
+        <div class="wrapper">
+            <nav class="nothome">
+                <div class="logo">
+                    <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/tw-sitelogo.png') }}" alt=""></a>
+                </div>
+                <ul class="nav-menu">
+                    <li>
+                        <a href="#" class="nav-link">NEWS</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">MUSIC</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">VIDEOS</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('store') }}" class="nav-link">STORE</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">XOFUND</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('acc') }}" class="nav-link">NEWSLETTER</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('acc') }}" class="nav-link">CART</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+            <!-- End of navigation menu -->
+        </div>
+    </header>
+
+    <div class="wrapper">
+    <section class="storesection">
+    {% for item in merch %}
+    <div class="merch">
+        <div class="figure">
+            <a href="item.html"><img class="image-main" src="{{ url_for('static', filename=item['image_main_url']) }}" alt="">
+                <img class="image-hover" src="{{ url_for('static', filename=item['image_hover_url']) }}" alt=""></a>
+        </div>
+        <ul>
+            <li>
+                <a href="#">{{ item['name'] }}</a>
+            </li>
+            <li>
+                <a href="#">${{ item['price'] }}</a>
+            </li>
+        </ul>
+    </div>
+    {% endfor %}
+    </section>
+    </div>
+    <!-- End of store section -->
+
+    <div class="wrapper">
+        <section class="footersection">
+            <div class="follow">
+                <ul>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/facebook.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/instagram.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/twitter.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/youtube.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/soundcloud.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/apple.png') }}" width="22"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ url_for('static', filename='images/spotify.png') }}" width="22"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="link">
+                <ul>
+                    <li>
+                        <a href="#">COPYRIGHT REPLUBIC RECORD</a>
+                    </li>
+                    <li>
+                        <a href="#">TERMS & CONDITIONS</a>
+                    </li>
+                    <li>
+                        <a href="#">PRIVACY POLICY</a>
+                    </li>
+                    <li>
+                        <a href="#">DO NOT SELL MY PERSONAL INFORMATION</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <!-- End of footer section -->
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+
+</html>
