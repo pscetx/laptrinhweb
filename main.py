@@ -34,11 +34,16 @@ def store():
 
 
 def load_data(search_text):
+    if search_text != "":
+        try:
+            max_price = float(search_text)
+        except ValueError:
+            max_price = 0
     if search_text:
         conn = sqlite3.connect(dbname)
         cur = conn.cursor()
-        command = "SELECT * FROM Merchandise WHERE name LIKE ? OR price LIKE ?"
-        cur.execute(command, ('%' + search_text + '%', '%' + search_text + '%'))
+        command = "SELECT * FROM Merchandise WHERE name LIKE ? OR price <= ?"
+        cur.execute(command, ('%' + search_text + '%', max_price))
         merch = cur.fetchall()
         merch_list = []
         for merch_item in merch:

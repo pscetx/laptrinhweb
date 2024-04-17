@@ -61,16 +61,16 @@
 
     <div class="search-bar">
     <form method="POST">
-        <input type="text" name="searchInput" placeholder="Search...">
+        <input type="text" name="searchInput" placeholder="Search with name or price">
         <button type="submit">Search</button>
     </form>
+        <p>
+            {% if search_text %}
+                You searched for: {{ search_text }}
+                {{ table|safe }}
+            {% endif %}
+        </p>
     </div>
-    <p>
-        {% if search_text %}
-            You searched for: {{ search_text }}
-            {{ table|safe }}
-        {% endif %}
-    </p>
 
     <div class="wrapper">
     <section class="storesection">
