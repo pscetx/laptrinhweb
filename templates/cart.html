@@ -15,8 +15,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/icon.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/icon.png') }}">
     <link rel="manifest" href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -48,6 +49,9 @@
                     <li>
                         <a href="{{ url_for('my_cart') }}" class="nav-link">CART</a>
                     </li>
+                    <li>
+                        <a href="#" class="nav-link" id="value-output"></a>
+                    </li>
                 </ul>
                 <div class="hamburger">
                     <span class="bar"></span>
@@ -59,48 +63,62 @@
         </div>
     </header>
 
-    <div class="search-bar">
-        <form method="GET" action="/cart">
-            <button type="submit">View Cart</button>
-        </form>
-        <form method="POST">
-            <input type="text" name="searchInput" placeholder="Search with name or price">
-            <button type="submit">Search</button>
-        </form>
-            <p>
-                {% if search_text %}
-                    You searched for: {{ search_text }}
-                    {{ table|safe }}
-                {% endif %}
-            </p>
-    </div>
-
     <div class="wrapper">
-    <section class="storesection">
-    {% for item in merch %}
-    <div class="merch">
-        <div class="figure">
-            <a href="{{ url_for('item', item_id=item['id']) }}"><img class="image-main" src="{{ url_for('static', filename=item['image_main_url']) }}" alt="">
-                <img class="image-hover" src="{{ url_for('static', filename=item['image_hover_url']) }}" alt=""></a>
+        <section class="h-100 mt-0" style="background-color: #eee;">
+        <div class="container h-100 py-5">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-10">
+
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-normal mb-0 text-black">My Cart</h3>
+              </div>
+            {%for product in cart%}
+              <div class="card rounded-3 mb-4">
+                <div class="card-body p-4">
+                  <div class="row d-flex justify-content-between align-items-center">
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                      <img
+                        src="{{ url_for('static', filename=product['image']) }}"
+                        class="img-fluid rounded-3" alt="Cotton T-shirt">
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                      <p class="lead fw-normal mb-2">{{product['name']}}</p>
+                    </div>
+
+                    <form action="cart/update" method="POST" class="d-flex justify-content-center">
+                        <input type="hidden" name="product_id" value="{{ product['id'] }}">
+                        <div class="col-md-5 col-lg-5 col-xl-5 d-flex">
+                            <input min="0" name="quantityChange" value="{{product['quantity']}}" type="number"
+                              class="form-control form-control-sm" />
+                          </div>
+                        <button>Update</button>
+                    </form>
+                    <div class="col-md-1 col-lg-1 col-xl-1 offset-lg-1">
+                      <h5 class="mb-0">${{product['price']}}</h5>
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                        <form action="cart/delete" method="POST">
+                            <input type="hidden" name="product_id" value="{{ product['id'] }}">
+                            <button>Delete</button>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {%endfor%}
+              <div class="card">
+                <div class="card-body">
+                  <form action="/cart/proceed" method="post">
+                    <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <ul>
-            <li>
-                <a href="{{ url_for('item', item_id=item['id']) }}">{{ item['name'] }}</a>
-            </li>
-            <li>
-                <a href="{{ url_for('item', item_id=item['id']) }}">${{ item['price'] }}</a>
-            </li>
-        </ul>
-        <form action="store/add" method="POST">
-            <input type="hidden" name="product_id" value="{{ item['id'] }}">
-            <input type="number" name="quantity" required min="1">
-            <button type="submit" class="btnAdd">Add</button>
-        </form>
+        </section>
     </div>
-    {% endfor %}
-    </section>
-    </div>
-    <!-- End of store section -->
+    <!-- End of cart section -->
 
     <div class="wrapper">
         <section class="footersection">

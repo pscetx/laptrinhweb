@@ -15,6 +15,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/icon.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/icon.png') }}">
     <link rel="manifest" href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -43,7 +44,7 @@
                         <a href="#" class="nav-link">XOFUND</a>
                     </li>
                     <li>
-                        <a href="{{ url_for('acc') }}" class="nav-link">NEWSLETTER</a>
+                        <a href="{{ url_for('signin') }}" class="nav-link">NEWSLETTER</a>
                     </li>
                     <li>
                         <a href="{{ url_for('my_cart') }}" class="nav-link">CART</a>
@@ -55,52 +56,43 @@
                     <span class="bar"></span>
                 </div>
             </nav>
-            <!-- End of navigation menu -->
         </div>
     </header>
-
-    <div class="search-bar">
-        <form method="GET" action="/cart">
-            <button type="submit">View Cart</button>
-        </form>
-        <form method="POST">
-            <input type="text" name="searchInput" placeholder="Search with name or price">
-            <button type="submit">Search</button>
-        </form>
-            <p>
-                {% if search_text %}
-                    You searched for: {{ search_text }}
-                    {{ table|safe }}
-                {% endif %}
-            </p>
-    </div>
+    <!-- End of navigation menu -->
 
     <div class="wrapper">
-    <section class="storesection">
-    {% for item in merch %}
-    <div class="merch">
-        <div class="figure">
-            <a href="{{ url_for('item', item_id=item['id']) }}"><img class="image-main" src="{{ url_for('static', filename=item['image_main_url']) }}" alt="">
-                <img class="image-hover" src="{{ url_for('static', filename=item['image_hover_url']) }}" alt=""></a>
-        </div>
-        <ul>
-            <li>
-                <a href="{{ url_for('item', item_id=item['id']) }}">{{ item['name'] }}</a>
-            </li>
-            <li>
-                <a href="{{ url_for('item', item_id=item['id']) }}">${{ item['price'] }}</a>
-            </li>
-        </ul>
-        <form action="store/add" method="POST">
-            <input type="hidden" name="product_id" value="{{ item['id'] }}">
-            <input type="number" name="quantity" required min="1">
-            <button type="submit" class="btnAdd">Add</button>
-        </form>
+        <section class="m-5">
+            <h1>Order Details</h1>
+            <h2>Items</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item[0] }}</td>
+                        <td><img src="{{ url_for('static', filename=item[1]) }}" alt="Item Image" class="img-thumbnail" style="max-width: 100px;"></td>
+                        <td>{{ item[2] }}</td>
+                        <td>${{ item[3] }}</td>
+                        <td>{{ item[4] }}</td>
+                        <td>${{ item[5] }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
-    {% endfor %}
-    </section>
-    </div>
-    <!-- End of store section -->
+    <!-- End of order section -->
 
     <div class="wrapper">
         <section class="footersection">
@@ -151,5 +143,4 @@
 
     <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
-
 </html>

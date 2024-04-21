@@ -16,7 +16,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/icon.png') }}">
     <link rel="manifest" href="{{ url_for('static', filename='images/icon.png') }}">
 
-    <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -43,7 +43,7 @@
                         <a href="#" class="nav-link">XOFUND</a>
                     </li>
                     <li>
-                        <a href="{{ url_for('acc') }}" class="nav-link">NEWSLETTER</a>
+                        <a href="{{ url_for('signin') }}" class="nav-link">NEWSLETTER</a>
                     </li>
                     <li>
                         <a href="{{ url_for('my_cart') }}" class="nav-link">CART</a>
@@ -59,48 +59,40 @@
         </div>
     </header>
 
-    <div class="search-bar">
-        <form method="GET" action="/cart">
-            <button type="submit">View Cart</button>
-        </form>
-        <form method="POST">
-            <input type="text" name="searchInput" placeholder="Search with name or price">
-            <button type="submit">Search</button>
-        </form>
-            <p>
-                {% if search_text %}
-                    You searched for: {{ search_text }}
-                    {{ table|safe }}
-                {% endif %}
-            </p>
-    </div>
-
     <div class="wrapper">
-    <section class="storesection">
-    {% for item in merch %}
-    <div class="merch">
-        <div class="figure">
-            <a href="{{ url_for('item', item_id=item['id']) }}"><img class="image-main" src="{{ url_for('static', filename=item['image_main_url']) }}" alt="">
-                <img class="image-hover" src="{{ url_for('static', filename=item['image_hover_url']) }}" alt=""></a>
-        </div>
-        <ul>
-            <li>
-                <a href="{{ url_for('item', item_id=item['id']) }}">{{ item['name'] }}</a>
-            </li>
-            <li>
-                <a href="{{ url_for('item', item_id=item['id']) }}">${{ item['price'] }}</a>
-            </li>
-        </ul>
-        <form action="store/add" method="POST">
-            <input type="hidden" name="product_id" value="{{ item['id'] }}">
-            <input type="number" name="quantity" required min="1">
-            <button type="submit" class="btnAdd">Add</button>
-        </form>
+        <section class="accsection">
+            <div class="newsletter">
+                <h1>
+                    SUBSCRIBE TO EMAIL UPDATES FROM:<br>
+                    THE WEEKND<br>
+                    REPUBLIC RECORDS<br>
+                    UNIVERSAL MUSIC GROUP<br>
+                </h1>
+                <p>Emails will be sent by or on behalf of Universal Music Group 2220 Colorado Avenue, Santa Monica, CA
+                    90404 (310)
+                    865-4000. You may withdraw your consent at any time.</p>
+                <div class="form">
+                    <input class="in" type="email" id="enterN" placeholder=" EMAIL ADDRESS"><br>
+                    <button class="sub" id="submitBtn">SUBMIT</button><br>
+                </div>
+            </div>
+            <div class="create">
+                <h1>Sign in</h1>
+                {% if error_message %}
+                    <p>{{ error_message }}</p>
+                {% endif %}
+                <div class="create"></div>
+                <form action="/signin" method="post">
+                    <div class="form">
+                        <input class="in" type="text" id="username" name="username" required placeholder=" USER NAME"><br>
+                        <input class="in" type="password" id="password" name="password" required placeholder=" PASSWORD"><br>
+                        <button class="sub" id="createBtn" type="submit">LOG IN</button><br>
+                    </div>
+                </form>
+                </div>
+        </section>
     </div>
-    {% endfor %}
-    </section>
-    </div>
-    <!-- End of store section -->
+    <!-- End of acc section -->
 
     <div class="wrapper">
         <section class="footersection">

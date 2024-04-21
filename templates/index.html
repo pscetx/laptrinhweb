@@ -46,8 +46,15 @@
                         <a href="{{ url_for('acc') }}" class="nav-link">NEWSLETTER</a>
                     </li>
                     <li>
-                        <a href="{{ url_for('acc') }}" class="nav-link">CART</a>
+                        <a href="{{ url_for('my_cart') }}" class="nav-link">CART</a>
                     </li>
+                    {% if session['username'] %}
+                        <li><a href="/account">{{ session['username'] }}</a> /
+                        <a href="/logout">LOGOUT</a></li>
+                    {% else %}
+                        <li><a href="/signin">LOGIN</a> /
+                        <a href="/signup">SIGNUP</a></li>
+                    {% endif %}
                 </ul>
                 <div class="hamburger">
                     <span class="bar"></span>
@@ -55,7 +62,7 @@
                     <span class="bar"></span>
                 </div>
             </nav>
-            <!-- End of navigaion menu -->
+            <!-- End of navigation menu -->
 
             <div class="herosection">
                 <img src="{{ url_for('static', filename='images/tour-title-gst.png') }}" alt="">
@@ -168,7 +175,7 @@
         <div class="link">
             <ul>
                 <li>
-                    <a href="#">COPYRIGHT REPLUBIC RECORD</a>
+                    <a href="#">COPYRIGHT REPUBLIC RECORD</a>
                 </li>
                 <li>
                     <a href="#">TERMS & CONDITIONS</a>
@@ -177,7 +184,7 @@
                     <a href="#">PRIVACY POLICY</a>
                 </li>
                 <li>
-                    <a href="#">DO NOT SELL MY PERSONAL INFOMATION</a>
+                    <a href="#">DO NOT SELL MY PERSONAL INFORMATION</a>
                 </li>
             </ul>
         </div>

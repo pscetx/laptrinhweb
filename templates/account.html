@@ -16,7 +16,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/icon.png') }}">
     <link rel="manifest" href="{{ url_for('static', filename='images/icon.png') }}">
 
-    <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -48,6 +48,9 @@
                     <li>
                         <a href="{{ url_for('my_cart') }}" class="nav-link">CART</a>
                     </li>
+                    <li>
+                        <a href="#" class="nav-link" id="value-output"></a>
+                    </li>
                 </ul>
                 <div class="hamburger">
                     <span class="bar"></span>
@@ -59,48 +62,18 @@
         </div>
     </header>
 
-    <div class="search-bar">
-        <form method="GET" action="/cart">
-            <button type="submit">View Cart</button>
-        </form>
-        <form method="POST">
-            <input type="text" name="searchInput" placeholder="Search with name or price">
-            <button type="submit">Search</button>
-        </form>
-            <p>
-                {% if search_text %}
-                    You searched for: {{ search_text }}
-                    {{ table|safe }}
-                {% endif %}
-            </p>
-    </div>
-
     <div class="wrapper">
-    <section class="storesection">
-    {% for item in merch %}
-    <div class="merch">
-        <div class="figure">
-            <a href="{{ url_for('item', item_id=item['id']) }}"><img class="image-main" src="{{ url_for('static', filename=item['image_main_url']) }}" alt="">
-                <img class="image-hover" src="{{ url_for('static', filename=item['image_hover_url']) }}" alt=""></a>
+        <div style="text-align:center; margin: 50px;">
+            <h1>Account Information</h1>
+            <p><strong>Username:</strong> {{ session['username'] }}</p>
+            <p><strong>First Name:</strong> {{ user_info['first_name'] }}</p>
+            <p><strong>Last Name:</strong> {{ user_info['last_name'] }}</p>
+            <p><strong>Email:</strong> {{ user_info['email'] }}</p>
+            <a href="/">Back to Home</a>
+            <a href="/logout">Logout</a>
         </div>
-        <ul>
-            <li>
-                <a href="{{ url_for('item', item_id=item['id']) }}">{{ item['name'] }}</a>
-            </li>
-            <li>
-                <a href="{{ url_for('item', item_id=item['id']) }}">${{ item['price'] }}</a>
-            </li>
-        </ul>
-        <form action="store/add" method="POST">
-            <input type="hidden" name="product_id" value="{{ item['id'] }}">
-            <input type="number" name="quantity" required min="1">
-            <button type="submit" class="btnAdd">Add</button>
-        </form>
     </div>
-    {% endfor %}
-    </section>
-    </div>
-    <!-- End of store section -->
+    <!-- End of account section -->
 
     <div class="wrapper">
         <section class="footersection">
